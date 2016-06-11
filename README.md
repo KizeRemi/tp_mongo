@@ -152,7 +152,9 @@ mongodump --db music --collection users --query "{favoriteSongs: {$size:0}}" --o
 ```
 ### 3/ 
 Créez une nouvelle base de données appelé ‘nofavorites’ contenant les utilisateurs exportés.
+```
 mongorestore --db=no-favorites data\db\music\users.bson
+```
 ### 4/ 
 Recherche: Quelles autres commandes permettent sur mongodb de faire export et
 import ? Quelles sont les différences avec mongodump et mongorestore ?
