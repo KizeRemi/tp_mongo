@@ -4,7 +4,7 @@ const faker = require('faker');
 const MongoClient = require('mongodb').MongoClient;
 
 /*** On créé un tableau contenant 1000 utilisateurs ***/
-var listUsers = [];
+let listUsers = [];
 for(let i=0; i<1000;i++){
 	listUsers.push({
 	    'username': faker.internet.userName(),
