@@ -137,7 +137,7 @@ cv:{
 	dernier diplome: "Licence pro"
 	id_user: < objectId1 >
 }
-
+```
 ## EXERCICE 5
 ### 1/ 
 Exportez la collections des chansons.
