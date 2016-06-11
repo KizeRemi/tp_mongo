@@ -3,6 +3,7 @@
 const faker = require('faker');
 const MongoClient = require('mongodb').MongoClient;
 
+/*** On créé un tableau contenant 1000 utilisateurs ***/
 var listUsers = [];
 for(let i=0; i<1000;i++){
 	listUsers.push({
@@ -15,6 +16,8 @@ for(let i=0; i<1000;i++){
 
 MongoClient.connect("mongodb://localhost:27017/music", function(err, db) {
   console.log("Connexion réussie");
+  
+  /*** On créé la collection Users et on insère les utilisateurs ***/
   db.createCollection(
     'users',
     {
