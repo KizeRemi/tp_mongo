@@ -95,3 +95,45 @@ db.recordLabel.createIndex({ "createdAt": 1 }, { expireAfterSeconds: 3600 } )
 db.recordLabel.insert({createdAt: new Date(),  nom:"testTTL", url: "urlTTL" })
 ```
 d. Créez une nouvelle collection recordLabel2, avec le même validator, mais avec une TTL sur les documents de 10 secondes.
+
+## EXERCICE 4
+Considérez les conceptes de CV et Personne. Comment peut on représenter ces
+deux concepts avec un Embbeded Design ?
+```
+Avec un Embbeded Design, les 2 concepts CV et Personnes seraient dans le même document. Exemple
+user: {
+	_id:  < objectId1 >
+	nom: "Mavillaz"
+	prenom: "Remi"
+	telephone: "0600000000"
+	adresse: "15, town street"
+	ville: "Townsville"
+	cv:{
+		titre: "Developpeur Web"
+		competence: "description de la competence"
+		dernier diplome: "Licence pro"
+	}
+}
+
+Le problème de ce type de design est la duplication des données.
+```
+
+Comment le faire avec le Separated Collection Design ?
+```
+Avec un Separated Design, les 2 concepts CV et Personnes seraient 2 documents différents. Exemple
+user:{
+	_id: < objectId1 >
+	nom: "Mavillaz"
+	prenom: "Remi"
+	telephone: "0600000000"
+	adresse: "15, town street"
+	ville: "Townsville"
+	id_cv: < objectId3 >
+}
+cv:{
+	_id: < objectId3 >
+	titre: "Developpeur Web"
+	competence: "description de la competence"
+	dernier diplome: "Licence pro"
+	id_user: < objectId1 >
+}
