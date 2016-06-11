@@ -38,7 +38,7 @@ db.getCollection('songs').find()
 ### 2/
 Comptez le nombre de documents existants dans la collection songs.
 ```
-db.songs.find().count()
+db.songs.count()
 ```
 ### 3/
 Affichez exclusivement les titres des chansons du Coldplay de l’album X&Y.
@@ -78,3 +78,20 @@ Modifiez le validator sur la collection afin d’ajouter le pays en utilisant le
 ```
 db.runCommand({ collMod: "recordLabel", validator: {$or: [{nom:{$type: "string"} }, {url:{$regex: /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/ } }, {country:{ $regex: /^(AF|AX|AL|DZ|AS|AD|AO|AI|AQ|AG|AR|AM|AW|AU|AT|AZ|BS|BH|BD|BB|BY|BE|BZ|BJ|BM|BT|BO|BQ|BA|BW|BV|BR|IO|BN|BG|BF|BI|KH|CM|CA|CV|KY|CF|TD|CL|CN|CX|CC|CO|KM|CG|CD|CK|CR|CI|HR|CU|CW|CY|CZ|DK|DJ|DM|DO|EC|EG|SV|GQ|ER|EE|ET|FK|FO|FJ|FI|FR|GF|PF|TF|GA|GM|GE|DE|GH|GI|GR|GL|GD|GP|GU|GT|GG|GN|GW|GY|HT|HM|VA|HN|HK|HU|IS|IN|ID|IR|IQ|IE|IM|IL|IT|JM|JP|JE|JO|KZ|KE|KI|KP|KR|KW|KG|LA|LV|LB|LS|LR|LY|LI|LT|LU|MO|MK|MG|MW|MY|MV|ML|MT|MH|MQ|MR|MU|YT|MX|FM|MD|MC|MN|ME|MS|MA|MZ|MM|NA|NR|NP|NL|NC|NZ|NI|NE|NG|NU|NF|MP|NO|OM|PK|PW|PS|PA|PG|PY|PE|PH|PN|PL|PT|PR|QA|RE|RO|RU|RW|BL|SH|KN|LC|MF|PM|VC|WS|SM|ST|SA|SN|RS|SC|SL|SG|SX|SK|SI|SB|SO|ZA|GS|SS|ES|LK|SD|SR|SJ|SZ|SE|CH|SY|TW|TJ|TZ|TH|TL|TG|TK|TO|TT|TN|TR|TM|TC|TV|UG|UA|AE|GB|US|UM|UY|UZ|VU|VE|VN|VG|VI|WF|EH|YE|ZM|ZW)$/} } ] }})
 ```
+### 9/ 
+Pour allez plus loin:
+a. Qu’est-ce que le TTL ?
+``` 
+TTL : Time To Live
+Il s'agit d'une option qui permet supprimer définitivement l'élement d'une collection après une certaine durée en seconde ou une date précise.
+```
+b. Quelles sont les modifications à faire sur une collection pour rajouter du TTL ?
+```
+Il faut rajouter un champ sur une collection qui serait une date. On créé alors un index sur le champ en question avec une date d'expiration.
+```
+c. Si vous devez faire cette manipulation sur la collection recordLabel, il faudrait faire quoi exactement ?
+```
+db.recordLabel.createIndex({ "createdAt": 1 }, { expireAfterSeconds: 3600 } )
+db.recordLabel.insert({createdAt: new Date(),  nom:"testTTL", url: "urlTTL" })
+```
+d. Créez une nouvelle collection recordLabel2, avec le même validator, mais avec une TTL sur les documents de 10 secondes.
