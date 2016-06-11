@@ -137,3 +137,31 @@ cv:{
 	dernier diplome: "Licence pro"
 	id_user: < objectId1 >
 }
+
+## EXERCICE 5
+### 1/ 
+Exportez la collections des chansons.
+```
+mongodump --db music --collection songs --out db/data
+```
+### 2/ 
+Exportez la collection des utilisateurs de la base des données n’ayant aucune
+chanson dans la liste des favorites.
+```
+mongodump --db music --collection users --query "{favoriteSongs: {$size:0}}" --out db/data
+```
+### 3/ 
+Créez une nouvelle base de données appelé ‘nofavorites’ contenant les utilisateurs exportés.
+mongorestore --db=no-favorites data\db\music\users.bson
+### 4/ 
+Recherche: Quelles autres commandes permettent sur mongodb de faire export et
+import ? Quelles sont les différences avec mongodump et mongorestore ?
+```
+Pour importer:
+mongorestore et mongoimport
+Mongorestore prend uniquement des documents au format Bson tandis que Mongoimport accepte les formats Json.
+
+Pour exporter:
+mongodump et mongoexport
+Mongodump va sauvegarder les données au format Bson tandis que mongoexport au format Json. Le mongodump est plus apprécié pour recréer une base avec les informations tandis que mongoexport va omettre des informations pour ne garder que les données importantes des documents.
+```
