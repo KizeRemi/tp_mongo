@@ -8,7 +8,7 @@ MongoClient.connect("mongodb://localhost:27017/music", function(err, db) {
 
   var Users = db.collection('users');
 
-  Users.find({favoriteSongs: {artist: "Coldplay"}})
+  Users.find({favoriteSongs: { $elemMatch: {artist: "Coldplay"}}})
   .forEach(function(user){
       console.log(user.username);
   });
